@@ -3,10 +3,22 @@ Ball = Class{}
 function Ball:init()
     self.x = VIRTUAL_WIDTH / 2 - 2
 	self.y = VIRTUAL_HEIGHT / 2 - 2
-    self.width = 4
-    self.height = 4
+    self.width = BALL_SIZE
+    self.height = BALL_SIZE
     self.dx = math.random(2) == 1 and -100 or 100 --lua ternary operator equivalent
 	self.dy = math.random(-50, 50)
+end
+
+function Ball:collides(box)
+    if self.x > box.x + box.width or self.x + self.width < box.x then
+        return false
+    end
+
+    if self.y > box.y + box.height or self.y + self.height < box.y then
+        return false
+    end
+
+    return true
 end
 
 function Ball:reset()

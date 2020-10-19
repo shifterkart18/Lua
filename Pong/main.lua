@@ -6,7 +6,7 @@ VIRTUAL_HEIGHT = 243
 
 --Game constants
 PADDLE_SPEED = 200
-BALL_SIZE = 5
+BALL_SIZE = 4
 
 Class = require 'class'
 push = require 'push'
@@ -27,10 +27,9 @@ function love.load()
 	player1Score = 0
 	player2Score = 0
 
+	ball = Ball()
 	paddle1 = Paddle(10, 10)
 	paddle2 = Paddle(VIRTUAL_WIDTH - 15, VIRTUAL_HEIGHT - 30)
-
-	ball = Ball()
 
 	gameState = 'start'
 
@@ -55,6 +54,24 @@ function love.keypressed(key)
 end
 
 function love.update(dt)
+	if ball:collides(paddle1) then
+		ball.dx = -ball.dx
+	end
+
+	if ball:collides(paddle2) then
+		ball.dx = -ball.dx
+	end
+
+	if ball.y <= 0 then
+		ball.dy = -ball.dy
+		ball.y = 0
+	end
+	
+	if ball.y >= VIRTUAL_HEIGHT - BALL_SIZE then
+		ball.dy = -ball.dy
+		ball.y = VIRTUAL_HEIGHT - BALL_SIZE
+	end
+	
 	if love.keyboard.isDown('w') then
 		paddle1.dy = -PADDLE_SPEED
 	elseif love.keyboard.isDown('s') then
