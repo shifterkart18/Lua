@@ -27,8 +27,8 @@ function love.load()
 	player1Score = 0
 	player2Score = 0
 
-	paddle1 = Paddle(5, 20)
-	paddle2 = Paddle(VIRTUAL_WIDTH - 10, VIRTUAL_HEIGHT - 30)
+	paddle1 = Paddle(10, 10)
+	paddle2 = Paddle(VIRTUAL_WIDTH - 15, VIRTUAL_HEIGHT - 30)
 
 	ball = Ball()
 
@@ -92,6 +92,8 @@ function love.draw()
 	paddle2:render()
 	ball:render()
 
+	displayFPS()
+
 	push:apply('end')
 end
 
@@ -109,4 +111,11 @@ function drawScore()
 	love.graphics.setFont(scoreFont)
 	love.graphics.print(player1Score, VIRTUAL_WIDTH / 2 - 50, VIRTUAL_HEIGHT / 3)
 	love.graphics.print(player2Score, VIRTUAL_WIDTH / 2 + 30, VIRTUAL_HEIGHT / 3)
+end
+
+function displayFPS()
+	love.graphics.setColor(0, 1, 0, 1)
+	love.graphics.setFont(smallFont)
+	love.graphics.print('FPS: ' .. tostring(love.timer.getFPS()), 40, 20) --examples of string concat
+	love.graphics.setColor(1, 1, 1, 1)
 end
