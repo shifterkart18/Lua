@@ -1,12 +1,15 @@
 Ball = Class{}
 
+MIN_DX = 140
+MAX_DX = 200
+
 function Ball:init()
     self.x = VIRTUAL_WIDTH / 2 - 2
 	self.y = VIRTUAL_HEIGHT / 2 - 2
     self.width = BALL_SIZE
     self.height = BALL_SIZE
-    self.dx = math.random(2) == 1 and -100 or 100 --lua ternary operator equivalent
-	self.dy = math.random(-50, 50)
+    self.dx = 0
+	self.dy = 0
 end
 
 function Ball:collides(box)
@@ -21,11 +24,16 @@ function Ball:collides(box)
     return true
 end
 
-function Ball:reset()
+function Ball:reset(servingPlayer)
 	self.x = VIRTUAL_WIDTH / 2 - 2
 	self.y = VIRTUAL_HEIGHT / 2 - 2
-	self.dx = math.random(2) == 1 and -100 or 100 --lua ternary operator equivalent
-	self.dy = math.random(-50, 50) * 1.5
+    self.dy = math.random(-50, 50) * 1.5
+    
+    if servingPlayer == 1 then
+		ball.dx = math.random(MIN_DX, MAX_DX)
+	else
+		ball.dx = -math.random(MIN_DX, MAX_DX)
+	end 
 end
 
 function Ball:update(dt)
